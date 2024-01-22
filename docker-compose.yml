@@ -19,7 +19,7 @@ services:
       - "8081:80" # Mapea el puerto 80 del host al puerto 80 del contenedor
       #Indica que el servicio depende de la disponibilidad de los 3 apache
     
-  laravel_api:
+  GotaMeteor_api:
     image: docker.io/bitnami/laravel:10
     ports:
       - '8085:8000'
@@ -30,9 +30,9 @@ services:
       - DB_PASSWORD=12345678
       - DB_DATABASE=Eneko
     volumes:
-      - './datos_proyecto/laravel_api/:/app'
+      - './datos_proyecto/GotaMeteor_api/:/app'
 
-  tratamiento_datos:
+  GotaMeteor_tratamiento_datos:
     image: docker.io/bitnami/laravel:10
     ports:
       - '8086:8000'
@@ -43,4 +43,4 @@ services:
       - DB_PASSWORD=12345678
       - DB_DATABASE=Eneko
     volumes:
-      - './datos_proyecto/laravel_datos/:/app'
+      - './datos_proyecto/GotaMeteor_datos/:/app'
