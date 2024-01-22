@@ -52,11 +52,42 @@
         <img src="imagenes/nublado.png" alt="">
         <form>
             <input type="text" placeholder="Nombre" required>
-            <input type="text" placeholder="Apellido" required>
-            <input type="text" placeholder="Usuario" required>
+            <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Contraseña" required>
+            <input type="password" placeholder="C_Contraseña" required>
             <button type="submit">Registrarse</button>
         </form>
     </div>
 </body>
+<script>
+    let formRegister = document.getElementById('register')
+    formRegister.addEventListener('submit', event =>{
+        event.preventDefault()
+    })
+
+    function register(){
+        let data= {
+            name: document.getElementById("nombre").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            c_password: document.getElementById("c_password").value
+        }
+        let config = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+
+        fetch('http://localhost:8085/api/register',config)
+            .then(response =>{
+                if(!response.ok){
+                    throw new Error
+                }
+                return response.json()
+            })
+            .then
+    }
+</script>
 </html>
