@@ -54,12 +54,44 @@
 <body>
     <div id="login-container">
         <img src="imagenes/nublado.png" alt="">
-        <form>
-            <input type="text" placeholder="Usuario" required>
-            <input type="password" placeholder="Contraseña" required>
+        <form id="login">
+            <input type="email" placeholder="Correo" id="email" value="aimar@gmail.com" required>
+            <input type="password" placeholder="Contraseña" id="password" value="123456" required>
             <button type="submit">Iniciar Sesión</button>
             <button type="button" id="register-button" onclick="location.href='register.html'">Registrar</button>
         </form>
     </div>
 </body>
+<script>
+    let formLogin = document.getElementById('login')
+    formLogin.addEventListener('submit', event =>{
+        event.preventDefault()
+        login()
+    })
+
+    function login(){
+        let data={
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        }
+        let config={
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+
+        fetch('http://localhost:8085/api/login',config)
+            .then(response =>{
+                if(!response.ok){
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .then(data=>{
+                console.log(data)
+            })
+    }
+</script>
 </html>

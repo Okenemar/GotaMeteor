@@ -50,19 +50,21 @@
 <body>
     <div id="register-container">
         <img src="imagenes/nublado.png" alt="">
-        <form>
-            <input type="text" placeholder="Nombre" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Contraseña" required>
-            <input type="password" placeholder="C_Contraseña" required>
+        <form id="register">
+            <input type="text" placeholder="Nombre" id="nombre" value="aimar" required>
+            <input type="email" placeholder="Email" id="email"value="aimar@gmail.com" required>
+            <input type="password" placeholder="Contraseña" id="password" value="123456" required>
+            <input type="password" placeholder="C_Contraseña" id="c_password"value="123456" required>
             <button type="submit">Registrarse</button>
         </form>
     </div>
 </body>
 <script>
     let formRegister = document.getElementById('register')
+    console.log(register)
     formRegister.addEventListener('submit', event =>{
         event.preventDefault()
+        register()
     })
 
     function register(){
@@ -83,11 +85,13 @@
         fetch('http://localhost:8085/api/register',config)
             .then(response =>{
                 if(!response.ok){
-                    throw new Error
+                    throw new Error(response.statusText)
                 }
                 return response.json()
             })
-            .then
+            .then(data=>{
+                console.log(data)
+            })
     }
 </script>
 </html>
