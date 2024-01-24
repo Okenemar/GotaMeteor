@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login con Icono</title>
+    <title>Login y Registro con Icono</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,16 +14,19 @@
             height: 100vh;
             margin: 0;
         }
-        #login-container {
+        .container {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             width: 300px;
             text-align: center;
+            padding: 20px;
         }
         form {
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         input {
             width: 100%;
@@ -46,52 +49,38 @@
             height: 150px;
             width: 150px;
         }
+        #register-container {
+            display: none;
+        }
         #register-button {
             background-color: rgb(68, 68, 252);
         }
     </style>
 </head>
 <body>
-    <div id="login-container">
+    <div id="login-container" class="container">
         <img src="imagenes/nublado.png" alt="">
-        <form id="login">
-            <input type="email" placeholder="Correo" id="email" value="aimar@gmail.com" required>
-            <input type="password" placeholder="Contraseña" id="password" value="123456" required>
+        <form id="login-form">
+            <input type="email" placeholder="Correo" id="login-email" value="aimar@gmail.com" required>
+            <input type="password" placeholder="Contraseña" id="login-password" value="123456" required>
             <button type="submit">Iniciar Sesión</button>
-            <button type="button" id="register-button" onclick="location.href='register.html'">Registrar</button>
+            <button type="button" id="register-button">Registrar</button>
         </form>
     </div>
+
+    <div id="register-container" class="container">
+        <img src="imagenes/nublado.png" alt="">
+        <form id="register-form">
+            <input type="text" placeholder="Nombre" id="nombre" value="aimar" required>
+            <input type="email" placeholder="Email" id="register-email" value="aimar@gmail.com" required>
+            <input type="password" placeholder="Contraseña" id="register-password" value="123456" required>
+            <input type="password" placeholder="C_Contraseña" id="c_password" value="123456" required>
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+
+    <script src="login_register.js">
+      
+    </script>
 </body>
-<script>
-    let formLogin = document.getElementById('login')
-    formLogin.addEventListener('submit', event =>{
-        event.preventDefault()
-        login()
-    })
-
-    function login(){
-        let data={
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        }
-        let config={
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }
-
-        fetch('http://localhost:8085/api/login',config)
-            .then(response =>{
-                if(!response.ok){
-                    throw new Error(response.statusText)
-                }
-                return response.json()
-            })
-            .then(data=>{
-                console.log(data)
-            })
-    }
-</script>
 </html>
