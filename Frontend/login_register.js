@@ -40,6 +40,9 @@ function login() {
         })
         .then(data => {
             console.log(data);
+            localStorage.setItem("token",data["data"]["token"])
+            window.location.assign("index.html")
+
         });
 }
 
@@ -73,5 +76,9 @@ function register() {
         })
         .then(data => {
             console.log(data);
+            localStorage.setItem("token",data["data"]["token"])
+            window.location.assign("index.html")
+
+
         });
 }

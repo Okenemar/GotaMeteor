@@ -10,11 +10,11 @@
             var ciudadesCreadas = [];
 
             var lugares = [
-                { "nombre": "Irun", "latitud": 43.3390, "longitud": -1.7896, "temperatura": "14ºC", "humedad": "94%", "viento": "10 km/h" },
-                { "nombre": "Donosti", "latitud": 43.3183, "longitud": -1.9812, "temperatura": "17ºC", "humedad": "54%", "viento": "15 km/h" },
-                { "nombre": "Orereta", "latitud": 43.3119, "longitud": -1.8985, "temperatura": "11ºC", "humedad": "92%", "viento": "19 km/h" },
-                { "nombre": "Bilbo", "latitud": 43.26838, "longitud": -2.93408, "temperatura": "19ºC", "humedad": "90%", "viento": "20 km/h" },
-                { "nombre": "Zarautz", "latitud": 43.2844400, "longitud": -2.1699200, "temperatura": "10ºC", "humedad": "85%", "viento": "23 km/h" }
+                { "nombre": "Irun", "latitud": 43.3390, "longitud": -1.7896, "temperatura": "14ºC", "humedad": "94%", "viento": "10 km/h", "nieve":"0 cm", "lluvia": "0 mm" },
+                { "nombre": "Donosti", "latitud": 43.3183, "longitud": -1.9812, "temperatura": "17ºC", "humedad": "54%", "viento": "15 km/h", "nieve":"1 cm", "lluvia": "1 mm" },
+                { "nombre": "Orereta", "latitud": 43.3119, "longitud": -1.8985, "temperatura": "11ºC", "humedad": "92%", "viento": "19 km/h", "nieve":"2 cm", "lluvia": "2 mm" },
+                { "nombre": "Bilbo", "latitud": 43.26838, "longitud": -2.93408, "temperatura": "19ºC", "humedad": "90%", "viento": "20 km/h", "nieve":"3 cm", "lluvia": "3 mm" },
+                { "nombre": "Zarautz", "latitud": 43.2844400, "longitud": -2.1699200, "temperatura": "10ºC", "humedad": "85%", "viento": "23 km/h", "nieve":"4 cm", "lluvia": "4 mm" }
             ];
 
             lugares.forEach(lugar => {
@@ -80,21 +80,21 @@
                             cardContenido += `
                                 <div class="icon-container">
                                     <img src="imagenes/lluvia.png" alt="Lluvia" class="card-icon" id="${dato}">
-                                    <span>20</span>
+                                    <span>${lugar.lluvia}</span>
                                 </div>`;
                             break;
                         case 'nieve':
                             cardContenido += `
                                 <div class="icon-container">
                                     <img src="imagenes/nieve.png" alt="Nieve" class="card-icon" id="${dato}">
-                                    <span>100</span>
+                                    <span>${lugar.nieve}</span>
                                 </div>`;
                             break;
                         case 'viento':
                             cardContenido += `
                                 <div class="icon-container">
                                     <img src="imagenes/viento.png" alt="Viento" class="card-icon" id="${dato}">
-                                    <span>300</span>
+                                    <span>${lugar.viento}</span>
                                 </div>`;
                             break;
                         default:
