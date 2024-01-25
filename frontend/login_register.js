@@ -3,16 +3,6 @@ document.getElementById('register-button').addEventListener('click', function() 
     document.getElementById('register-container').style.display = 'block';
 });
 
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    login();
-});
-
-document.getElementById('register-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    register();
-});
-
 let formLogin = document.getElementById('login-form');
 formLogin.addEventListener('submit', event => {
     event.preventDefault();
@@ -77,6 +67,35 @@ function register() {
         .then(data => {
             console.log(data);
             localStorage.setItem("token",data["data"]["token"])
+            window.location.assign("mapa.html")
+
+
+        });
+}
+
+let logout = document.getElementById('logout');
+logout.addEventListener('submit', event => {
+    event.preventDefault();
+    LogOut();
+});
+
+function LogOut() {
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+        },
+    };
+
+    fetch('http://localhost:8085/api/logout', config)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
             window.location.assign("mapa.html")
 
 
