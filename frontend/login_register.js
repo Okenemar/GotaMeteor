@@ -73,13 +73,8 @@ function register() {
         });
 }
 
-let logout = document.getElementById('logout');
-logout.addEventListener('submit', event => {
-    event.preventDefault();
-    LogOut();
-});
-
 function LogOut() {
+    console.log("ñato")
     let config = {
         method: 'GET',
         headers: {
@@ -89,15 +84,6 @@ function LogOut() {
     };
 
     fetch('http://localhost:8085/api/logout', config)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            window.location.assign("mapa.html")
-
-
-        });
+    console.log("sesión cerrada")
+    window.location.assign("index.html")
 }
