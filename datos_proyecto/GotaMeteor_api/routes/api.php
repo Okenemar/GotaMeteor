@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
   
 use App\Http\Controllers\API\RegisterController;
-  
+use App\Http\Controllers\DataController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +20,7 @@ use App\Http\Controllers\API\RegisterController;
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 
-
+Route::get('recoger', [DataController::class, 'index']);
      
 Route::middleware('auth:api')->group( function () {
 Route::get('logout', [RegisterController::class, 'logout']);

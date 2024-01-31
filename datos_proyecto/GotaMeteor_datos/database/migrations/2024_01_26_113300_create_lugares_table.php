@@ -18,7 +18,6 @@ return new class extends Migration
             $table->float('temperatura');
             $table->float('humedad');
             $table->float('viento');
-            $table->float('nieve');
             $table->float('lluvia');
         });
     }

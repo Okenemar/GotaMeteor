@@ -10,10 +10,10 @@ class Lugar_GotaMeteor extends Model
     
     use HasFactory;
     
-    protected $table= "Lugares_GotaMeteor";
-
-    protected $keyType= "string";
-
+    protected $table = "Lugares_GotaMeteor";
+    protected $primaryKey = "nombre";
+    protected $keyType = "string";
+    public $timestamps = false;
     protected $fillable = [
         "nombre",
         "latitud",
@@ -21,7 +21,6 @@ class Lugar_GotaMeteor extends Model
         "temperatura",
         "humedad",
         "viento",
-        "nieve",
         "lluvia"
     ];
 }

@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Historico_GotaMeteor extends Model
+class Lugar_GotaMeteor extends Model
 {
+    
     use HasFactory;
     
-    protected $table= "Historico_GotaMeteor";
+    protected $table= "Lugares_GotaMeteor";
 
     protected $keyType= "string";
-
+    public $timestamps = false;
     protected $fillable = [
         "nombre",
-        "fecha",
+        "latitud",
+        "longitud",
         "temperatura",
         "humedad",
         "viento",

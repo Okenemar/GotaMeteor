@@ -44,3 +44,4 @@ services:
       - DB_DATABASE=Eneko
     volumes:
       - './datos_proyecto/GotaMeteor_datos/:/app'
+    command: ["php", "artisan", "schedule:work"]
