@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Historico_Lugares_GotaMeteor', function (Blueprint $table) {
+        Schema::create('Historico_GotaMeteor', function (Blueprint $table) {
             $table->string('nombre');
-            $table->date('fecha');
+            $table->timestamp('fecha');
             $table->float('temperatura');
             $table->float('humedad');
             $table->float('viento');
@@ -30,11 +30,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('Historico_Lugares_GotaMeteor', function (Blueprint $table) {
+        Schema::table('Historico_GotaMeteor', function (Blueprint $table) {
             // Eliminar la clave foránea
             $table->dropForeign(['nombre']);
         });
 
-        Schema::dropIfExists('Historico_Lugares_GotaMeteor');
+        Schema::dropIfExists('Historico_GotaMeteor');
     }
 };

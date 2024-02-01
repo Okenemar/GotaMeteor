@@ -10,9 +10,7 @@ class Historico_GotaMeteor extends Model
     use HasFactory;
     
     protected $table= "Historico_GotaMeteor";
-
-    protected $keyType= "string";
-
+    public $timestamps =false;
     protected $fillable = [
         "nombre",
         "fecha",

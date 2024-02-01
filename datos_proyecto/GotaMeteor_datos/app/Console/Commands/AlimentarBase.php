@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\HistoricoController;
+
+
 
 class AlimentarBase extends Command
 {
@@ -28,5 +31,7 @@ class AlimentarBase extends Command
     {
         $controlador = new DataController();
         $controlador -> store();
+        $historico = new HistoricoController();
+        $historico -> store();
     }
 }
