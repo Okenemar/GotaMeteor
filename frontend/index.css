@@ -14,13 +14,10 @@
     }
 }
 img.huechange {
-    filter: hue-rotate(120deg);
+    filter: hue-rotate(30);
 }
 
-img.huechange.clicked {
-    filter: hue-rotate(30deg);
-    /* Cambia el color al hacer clic */
-}
+
 
 img {
     height: 50px;
