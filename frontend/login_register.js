@@ -74,7 +74,6 @@ function register() {
 }
 
 function LogOut() {
-    console.log("ñato")
     let config = {
         method: 'GET',
         headers: {

@@ -24,7 +24,7 @@ services:
     ports:
       - '8085:8000'
     environment:
-      - DB_HOST=185.60.40.210
+      - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=Eneko
       - DB_PASSWORD=12345678
@@ -37,7 +37,7 @@ services:
     ports:
       - '8086:8000'
     environment:
-      - DB_HOST=185.60.40.210
+      - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=Eneko
       - DB_PASSWORD=12345678
@@ -45,3 +45,23 @@ services:
     volumes:
       - './datos_proyecto/GotaMeteor_datos/:/app'
     command: ["php", "artisan", "schedule:work"]
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'Eneko'
+      MYSQL_USER: 'Eneko'
+      MYSQL_PASSWORD: '12345678'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - './datos_proyecto/mysql/:/var/lib/mysql'
+  phpmyadmin:
+    image: 'phpmyadmin:latest'
+    ports:
+      - 8084:80
+    environment:
+      - PMA_ARBITRARY=1
