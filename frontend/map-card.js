@@ -32,11 +32,11 @@ fetch('http://10.10.17.123:8085/api/recoger')
             card.innerHTML = `
                 <div class="card-body">
                     <h5 class="card-title">${lugar.nombre}</h5>
-                    <div class="icon-container">
+                    <div class="temperatura">
                         <img src="imagenes/sensor-de-temperatura.png" alt="Temperatura" class="card-icon">
                         <span id="dato-temperatura">${lugar.temperatura} ºC</span>
                     </div>
-                    <div class="icon-container">
+                    <div class="humedad">
                         <img src="imagenes/humedad.png" alt="Humedad" class="card-icon">
                         <span id="dato-humedad">${lugar.humedad} %</span>
                     </div>
@@ -44,7 +44,7 @@ fetch('http://10.10.17.123:8085/api/recoger')
 
             cardContainer.appendChild(card);
 
-            predicciones(lugar.nombre)
+            predicciones(lugar.nombre);
 
             $(".draggable").on('dragstart', function (event) {
                 event.originalEvent.dataTransfer.setData("dato", event.target.id);
@@ -63,35 +63,44 @@ fetch('http://10.10.17.123:8085/api/recoger')
 
             function mostrarInfo(dato, nombreCard) {
                 var card = document.getElementById(nombreCard);
-                // card.getElementsByClassName('card-body')
-                // console.log(card.getElementsByClassName('card-body')[0])
-                if ($(`#${dato}`, card).length > 0) {
+
+                // Busca el card-body dentro de la tarjeta
+                var cardBody = card.querySelector('.card-body');
+
+                // Verifica si ya existe el elemento con el mismo dato
+                if (cardBody.querySelector(`#${dato}`)) {
                     console.log(`Ya existe un ${dato} en esta tarjeta.`);
                     return;
                 }
 
-                var cardContenido = card.innerHTML;
+                // Crea un nuevo elemento para la información
+                var nuevoElemento = cardBody.innerHTML
 
+                // Agrega la información según el tipo de dato
                 switch (dato) {
                     case 'lluvia':
-                        cardContenido += `
-                            <div class="icon-container">
-                                <img src="imagenes/lluvia.png" alt="Lluvia" class="card-icon" id="${dato}">
-                                <span id="dato-lluvia">${lugar.lluvia} </span>
+                        nuevoElemento += ` 
+                        <div class="lluvia">
+                            <img src="imagenes/lluvia.png" alt="Lluvia" class="card-icon" id="${dato}">
+                            <span id="dato-lluvia">${lugar.lluvia} l/m2</span>
                             </div>`;
                         break;
                     case 'viento':
-                        cardContenido += `
-                            <div class="icon-container">
-                                <img src="imagenes/viento.png" alt="Viento" class="card-icon" id="${dato}">
-                                <span id="dato-viento">${lugar.viento} km/h</span>
+                        nuevoElemento += `
+                        <div class="viento">
+
+                            <img src="imagenes/viento.png" alt="Viento" class="card-icon" id="${dato}">
+                            <span id="dato-viento">${lugar.viento} km/h</span>
                             </div>`;
                         break;
                     default:
                         break;
                 }
 
-                card.innerHTML = cardContenido;
+                // Agrega el nuevo elemento al card-body
+                // cardBody.appendChild(nuevoElemento);
+                cardBody.innerHTML = nuevoElemento;
+                // Agrega la clase para indicar que se ha insertado contenido
                 card.classList.add('contenido-insertado');
             }
 
@@ -144,19 +153,36 @@ function restaurarEstado() {
         }
     }
 }
- setInterval(actualizarCard, 20000);
 
-
+setInterval(actualizarCard, 15000);
 function actualizarCard() {
     fetch('http://10.10.17.123:8085/api/recoger')
         .then(response => response.json())
         .then(data => {
             lugares = data.lugares;
             for (lugar of lugares) {
-                console.log(document.getElementById(`card-${lugar.nombre}`).children[0])
-
-
+                // console.log(document.getElementById(`card-${lugar.nombre}`).children[0])
+                datos = document.getElementById(`card-${lugar.nombre}`).children[0].children
+                console.log(datos);         
+                for (dato of datos) {
+                    switch (dato.className) {
+                        case 'temperatura':
+                            dato.getElementsByTagName('span')[0].innerHTML = `${lugar.temperatura} ºC`
+                            break;
+                        case 'humedad':
+                            dato.getElementsByTagName('span')[0].innerHTML = `${lugar.humedad} %`
+                            break;
+                        case 'lluvia':
+                            dato.getElementsByTagName('span')[0].innerHTML = `${lugar.lluvia} l/m2`
+                            break;
+                        case 'viento':
+                            dato.getElementsByTagName('span')[0].innerHTML = `${lugar.viento} km/h`
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
             }
-        })
-
+        });
 }
