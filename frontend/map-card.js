@@ -170,4 +170,5 @@ function actualizarCard() {
 }
 function eliminarDato(nombreCard, dato) {
     document.getElementById(nombreCard).children[0].removeChild(document.getElementById(nombreCard).children[0].getElementsByClassName(dato)[0])
+    console.log("iker god")
 }
