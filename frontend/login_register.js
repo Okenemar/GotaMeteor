@@ -1,3 +1,5 @@
+let urlActual = (new URL(window.location.origin)).hostname;
+
 document.getElementById('register-button').addEventListener('click', function() {
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('register-container').style.display = 'block';
@@ -21,7 +23,7 @@ function login() {
         body: JSON.stringify(data)
     };
 
-    fetch('http://10.10.17.123:8085/api/login', config)
+    fetch(`http://${urlActual}:8085/api/login`, config)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -57,7 +59,7 @@ function register() {
         body: JSON.stringify(data)
     };
 
-    fetch('http://10.10.17.123:8085/api/register', config)
+    fetch(`http://${urlActual}:8085/api/register`, config)
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -82,7 +84,7 @@ function LogOut() {
         },
     };
 
-    fetch('http://10.10.17.123:8085/api/logout', config)
+    fetch(`http://${urlActual}:8085/api/logout`, config)
     console.log("sesión cerrada")
     localStorage.removeItem("token")
     window.location.assign("index.html")

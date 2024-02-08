@@ -8,7 +8,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-fetch('http://10.10.17.123:8085/api/recoger')
+fetch(`http://${urlActual}:8085/api/recoger`)
     .then(response => response.json())
     .then(data => {
         lugares = data.lugares;
@@ -141,7 +141,7 @@ function restaurarEstado() {
 setInterval(actualizarCard, 15000);
 
 function actualizarCard() {
-    fetch('http://10.10.17.123:8085/api/recoger')
+    fetch(`http://${urlActual}:8085/api/recoger`)
         .then(response => response.json())
         .then(data => {
             lugares = data.lugares;
@@ -170,5 +170,4 @@ function actualizarCard() {
 }
 function eliminarDato(nombreCard, dato) {
     document.getElementById(nombreCard).children[0].removeChild(document.getElementById(nombreCard).children[0].getElementsByClassName(dato)[0])
-    console.log("iker god")
 }
