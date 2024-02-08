@@ -12,7 +12,7 @@
              borderColor: "red",
              fill: false
          }, {
-             label: 'Temperatura',
+             label: 'Humedad',
              data: [16, 17, 15, 19, 20, 27, 4, 14, 19, 18],
              borderColor: "green",
              fill: false
