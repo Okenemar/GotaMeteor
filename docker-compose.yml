@@ -31,6 +31,10 @@ services:
       - DB_DATABASE=Eneko
     volumes:
       - './datos_proyecto/GotaMeteor_api/:/app'
+    command: ["sh", "-c", "php artisan migrate && php artisan passport:install --force && php artisan serve --host=0.0.0.0"]
+    depends_on:
+             mysql:
+                condition: service_healthy
 
   GotaMeteor_tratamiento_datos:
     image: docker.io/bitnami/laravel:10
@@ -45,6 +49,9 @@ services:
     volumes:
       - './datos_proyecto/GotaMeteor_datos/:/app'
     command: ["php", "artisan", "schedule:work"]
+    depends_on:
+             mysql:
+                condition: service_healthy
 
   mysql:
     image: mysql:latest
@@ -59,6 +66,12 @@ services:
       - '3306'
     volumes:
       - './datos_proyecto/mysql/:/var/lib/mysql'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
   phpmyadmin:
     image: 'phpmyadmin:latest'
     ports:
