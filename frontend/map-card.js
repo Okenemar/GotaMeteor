@@ -19,6 +19,7 @@ fetch(`http://${urlActual}:8085/api/recoger`)
                 permanent: false,
                 direction: 'top',
                 offset: L.point(0, -20)
+
             });
 
             var card = document.createElement('div');
@@ -43,59 +44,10 @@ fetch(`http://${urlActual}:8085/api/recoger`)
                 </div>`;
 
             cardContainer.appendChild(card);
-
+            console.log(lugar)
             predicciones(lugar.nombre);
 
-            $(".draggable").off("dragstart").on('dragstart', function (event) {
-                event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
-            });
 
-            $(".droppable").off("dragover").on("dragover", function (event) {
-                event.preventDefault();
-            });
-
-            $(".droppable").off("drop").on("drop", function (event) {
-                event.preventDefault();
-                var dato = event.originalEvent.dataTransfer.getData("text/plain");
-                var nombreCard = this.id;
-                mostrarInfo(dato, nombreCard);
-            });
-
-            function mostrarInfo(dato, nombreCard) {
-                var card = document.getElementById(nombreCard);
-                var cardBody = card.querySelector('.card-body');
-
-                if (cardBody.querySelector(`#${dato}`)) {
-                    console.log(`Ya existe un ${dato} en esta tarjeta.`);
-                    return;
-                }
-
-                var nuevoElemento = cardBody.innerHTML;
-
-                switch (dato) {
-                    case 'lluvia':
-                        nuevoElemento += ` 
-                            <div class="lluvia">
-                                <img src="imagenes/lluvia.png" alt="Lluvia" class="card-icon" id="${dato}">
-                                <span id="dato-lluvia">${lugar.lluvia} mm</span>
-                                <img src="imagenes/papelera-de-reciclaje.png" alt="Papelera" class="papelera" onclick="eliminarDato('${nombreCard}','${dato}')">
-                            </div>`;
-                        break;
-                    case 'viento':
-                        nuevoElemento += `
-                            <div class="viento">
-                                <img src="imagenes/viento.png" alt="Viento" class="card-icon" id="${dato}">
-                                <span id="dato-viento">${lugar.viento} km/h</span>
-                                <img src="imagenes/papelera-de-reciclaje.png" alt="Papelera" class="papelera" onclick="eliminarDato('${nombreCard}','${dato}')">
-                            </div>`;
-                        break;
-                    default:
-                        break;
-                }
-
-                cardBody.innerHTML = nuevoElemento;
-                card.classList.add('contenido-insertado');
-            }
 
             tooltip.on('click', function () {
                 var card = document.getElementById(`card-${lugar.nombre}`);
@@ -117,12 +69,70 @@ fetch(`http://${urlActual}:8085/api/recoger`)
 
         localStorage.setItem('lugares', lugares.map(lugar => lugar.nombre).join(','));
         restaurarEstado();
+        $(".draggable").off("dragstart").on('dragstart', function (event) {
+            event.originalEvent.dataTransfer.setData("text/plain", event.target.id);
+
+        });
+
+        $(".droppable").off("dragover").on("dragover", function (event) {
+            event.preventDefault();
+        });
+
+        $(".droppable").off("drop").on("drop", function (event) {
+            event.preventDefault();
+            var dato = event.originalEvent.dataTransfer.getData("text/plain");
+            var nombreCard = this.id;
+            let idCardSeparada = this.id.split('-')[1]
+            lugares.forEach(lugar => {
+                if (lugar.nombre == idCardSeparada) {
+                    mostrarInfo(dato, nombreCard, lugar);
+                }
+            })
+
+        });
+
     });
+
 
 function guardarEstadoTarjeta(nombre, estado) {
     var estadoTarjetas = JSON.parse(localStorage.getItem('estadoTarjetas')) || {};
     estadoTarjetas[nombre] = estado;
     localStorage.setItem('estadoTarjetas', JSON.stringify(estadoTarjetas));
+}
+
+function mostrarInfo(dato, nombreCard, lugar) {
+    var card = document.getElementById(nombreCard);
+    var cardBody = card.querySelector('.card-body');
+
+    if (cardBody.querySelector(`#${dato}`)) {
+        console.log(`Ya existe un ${dato} en esta tarjeta.`);
+        return;
+    }
+
+    var nuevoElemento = cardBody.innerHTML;
+    switch (dato) {
+        case 'lluvia':
+            nuevoElemento += ` 
+    <div class="lluvia">
+        <img src="imagenes/lluvia.png" alt="Lluvia" class="card-icon" id="${dato}">
+        <span id="dato-lluvia">${lugar.lluvia} mm</span>
+        <img src="imagenes/papelera-de-reciclaje.png" alt="Papelera" class="papelera small" onclick="eliminarDato('${nombreCard}','${dato}')">
+    </div>`;
+            break;
+        case 'viento':
+            nuevoElemento += `
+    <div class="viento">
+        <img src="imagenes/viento.png" alt="Viento" class="card-icon" id="${dato}">
+        <span id="dato-viento">${lugar.viento} km/h</span>
+        <img src="imagenes/papelera-de-reciclaje.png" alt="Papelera" class="papelera small" onclick="eliminarDato('${nombreCard}','${dato}')">
+    </div>`;
+            break;
+        default:
+            break;
+    }
+
+    cardBody.innerHTML = nuevoElemento;
+    card.classList.add('contenido-insertado');
 }
 
 function restaurarEstado() {
