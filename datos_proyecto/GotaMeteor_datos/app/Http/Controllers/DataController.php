@@ -76,21 +76,18 @@ foreach ($provincias as $provincia => $provinciaData) {
 }
     }
 
-    public function numerosInventados(){
-        $lugares = Lugar_GotaMeteor::all();
-        foreach($lugares as $lugar){
-            $lugar -> temperatura = $lugar -> temperatura + mt_rand(-1,1);
-            $lugar -> humedad = $lugar -> humedad + mt_rand(-1,1);
-            $lugar -> viento = $lugar -> viento + mt_rand(-1,1);
-            $lugar -> lluvia = $lugar -> lluvia + mt_rand(-1,1);
-    
-            $lugar->save();
-        }
-        
-       
+    public function numerosInventados() {
+    $lugares = Lugar_GotaMeteor::all();
 
+    foreach ($lugares as $lugar) {
+        $lugar->temperatura = $lugar->temperatura + mt_rand(-1, 1);
+        $lugar->humedad = max(0, $lugar->humedad + mt_rand(-1, 1));
+        $lugar->viento = max(0, $lugar->viento + mt_rand(-1, 1));
+        $lugar->lluvia = max(0, $lugar->lluvia + mt_rand(-1, 1));
 
-
+        $lugar->save();
     }
+}
+
 
 }
